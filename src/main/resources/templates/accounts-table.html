@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Konta</title>
+    <link th:replace="fragments/back-styles">
+</head>
+
+<body id="page-top">
+<nav th:replace="fragments/back-navigation"></nav>
+<main class="page">
+    <section class="clean-block dark h-100">
+        <div class="container cextra">
+            <h3 class="text-left text-dark mb-4">Konta</h3>
+            <form th:action="@{/accounts}" method="post">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 col-xl-5 text-nowrap">
+                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                    <label>Show
+                                        <input type="hidden" th:field="${tablePage.lastSize}">
+                                        <select class="form-control form-control-sm custom-select custom-select-sm"
+                                                th:field="${tablePage.size}" onchange="this.form.submit()">
+                                            <option value="10" th:selected="${tablePage.size==10}">10</option>
+                                            <option value="25" th:selected="${tablePage.size==25}">25</option>
+                                            <option value="50" th:selected="${tablePage.size==50}">50</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-7 text-right d-md-flex d-xl-flex align-items-md-end align-items-xl-end">
+                                <div class="text-md-right dataTables_filter" id="dataTable_filter"></div>
+                                <div class="input-group" style="margin-right: 16px;margin-bottom: 8px;">
+                                    <div class="input-group-prepend"></div>
+                                    <input type="hidden" th:field="${tablePage.lastSearchStr}">
+                                    <input class="form-control" type="text" th:field="${tablePage.searchStr}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">Wyszukaj</button>
+                                    </div>
+                                </div>
+                                <a th:href="@{/accounts/add}">
+                                    <button class="btn btn-primary" type="button" style="height: 38px;margin-bottom: 8px;">
+                                        Dodaj
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
+                            <table class="table dataTable my-0" id="dataTable">
+                                <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Rola</th>
+                                    <th>Enabled</th>
+                                    <th>Opcje</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="user:${userList}">
+                                    <div th:object="${user}">
+                                        <td th:text="*{username}">a.satou</td>
+                                        <td th:switch="*{role}">
+                                            <span th:case="LVL30">Poziom 1</span>
+                                            <span th:case="LVL1">Poziom 2</span>
+                                        </td>
+                                        <td th:text="*{enabled}?'Tak':'Nie'">Yes</td>
+                                        <td>
+                                            <div class="dropdown ">
+                                                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
+                                                        aria-expanded="true" type="button"><i class="fa fa-cog"></i>
+                                                </button>
+                                                <div class="dropdown-menu " role="menu">
+                                                    <a class="dropdown-item" role="presentation" th:href="@{/accounts/state/{username}(username=*{username})}">(De)Aktywuj</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </div>
+                                </tr>
+                                <tr></tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td><strong>Username</strong></td>
+                                    <td><strong>Rola</strong></td>
+                                    <td><strong>Enabled</strong></td>
+                                    <td><strong>Opcje</strong></td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 align-self-center">
+                            </div>
+                            <div class="col-md-6">
+                                <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                                    <input type="hidden" name="currentPage" th:value="${tablePage.currentPage}">
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <input type="hidden" name="hasPrev" th:value="${tablePage.hasPrev}">
+                                            <input type="submit" class="btn page-link" name="pageAction"
+                                                   th:value="Prev" th:disabled="${!tablePage.hasPrev}"
+                                                   aria-label="Previous">
+                                        </li>
+
+                                        <li class="page-item">
+                                            <input type="hidden" name="hasNext" th:value="${tablePage.hasNext}">
+                                            <input type="submit" class="btn page-link" name="pageAction"
+                                                   th:value="Next" th:disabled="${!tablePage.hasNext}"
+                                                   aria-label="Next">
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+<script th:replace="fragments/back-general-scripts"></script>
+</body>
+
+</html>
