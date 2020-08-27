@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Sprawdź zamówienie</title>
+    <link th:replace="fragments/front-styles">
+</head>
+
+<body>
+<nav th:replace="fragments/front-navigation"></nav>
+<main class="page">
+    <section class="clean-block clean-form dark">
+        <div class="container">
+            <div class="block-heading">
+                <p style="margin-bottom: 50px;">Sprawdź informacje na temat zamówienia poniżej.</p>
+                <div class="shadow-sm bg-white">
+                    <table class="table" th:object="${order}">
+                        <tbody>
+                        <tr>
+                            <td>Imie:</td>
+                            <td th:text="*{firstName}"></td>
+                        </tr>
+                        <tr>
+                            <td>Nazwisko:</td>
+                            <td th:text="*{surname}"></td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td th:text="*{email}"></td>
+                        </tr>
+                        <tr>
+                            <td >Adres:</td>
+                            <td th:text="*{address}"></td>
+                        </tr>
+                        <tr>
+                            <td>Produkt:</td>
+                            <th:block th:switch="*{weight}">
+                                <td th:case="0">100g</td>
+                                <td th:case="1">250g</td>
+                                <td th:case="2">500g</td>
+                                <td th:case="3">1kg</td>
+                            </th:block>
+                        </tr>
+                        <tr>
+                            <td>Stan:</td>
+                            <th:block th:switch="*{orderState}">
+                                <td th:case="0">Nowe</td>
+                                <td th:case="1">Realizowane</td>
+                                <td th:case="2">Wyslane</td>
+                                <td th:case="3">Zrealizowane</td>
+                            </th:block>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-center" style="margin-bottom: 50px;margin-top: 50px;">Sprawdź inne zamówienie</p>
+                <form th:action="@{/order/check-order}" method="post">
+                    <div class="form-group"><label for="orderID">Numer zamówienia</label>
+                        <input class="form-control"type="text" id="orderID" th:name="orderID" th:value="${orderID}"></div>
+                    <button class="btn btn-primary btn-block" type="submit">Sprawdź</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script th:replace="fragments/front-general-scripts"></script>
+</body>
+
+</html>
