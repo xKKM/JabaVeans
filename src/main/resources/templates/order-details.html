@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Szczegóły zamówienia</title>
+    <link th:replace="fragments/back-styles">
+</head>
+
+<body id="page-top">
+<nav th:replace="fragments/back-navigation"></nav>
+<main class="page">
+    <section class="clean-block dark h-100">
+        <br>
+        <div class="container card cextra">
+            <form th:object="${order}" th:action="@{/orders/save-state}" method="post">
+                <div th:if="${order != null}">
+                    <input type="hidden" th:field="*{orderID}">
+                    <input type="hidden" th:field="*{firstName}">
+                    <input type="hidden" th:field="*{surname}">
+                    <input type="hidden" th:field="*{email}">
+                    <input type="hidden" th:field="*{address}">
+                    <input type="hidden" th:field="*{weight}">
+                    <input type="hidden" th:field="*{quantity}">
+                    <input type="hidden" th:field="*{dateOfOrder}">
+                    <input type="hidden" th:field="*{totalPrice}">
+                </div>
+                <div th:switch="${gettingOrderError}">
+                    <div th:case="true">
+                        <h3 class="alert-danger text-danger">Nie ma takiego zamówienia.</h3>
+                    </div>
+                    <div th:case="false">
+                        <h3 class="text-center text-dark mb-4">Szczegóły zamówienia&nbsp;<br>nr <b th:text="*{orderID}"></b></h3>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <p class="alert-danger text-danger" th:if="${#fields.hasErrors()}" >Nie można zapisać zmian</p>
+                                <tbody>
+                                <tr>
+                                    <td class="text-right">Imię i Nazwisko:</td>
+                                    <td th:text="*{firstName + ' ' + surname}">Cell 2</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right">Email</td>
+                                    <td th:text="*{email}">Cell 2</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right">Adres Dostawy:<br></td>
+                                    <td th:text="*{address}">Cell 2</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right">Produkt:</td>
+                                    <th:block th:switch="*{weight}">
+                                        <td th:case="0">100g</td>
+                                        <td th:case="1">250g</td>
+                                        <td th:case="2">500g</td>
+                                        <td th:case="3">1kg</td>
+                                    </th:block>
+                                </tr>
+
+                                <tr>
+                                    <td class="text-right">Ilość:</td>
+                                    <td th:text="*{quantity}">Cell 2</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right">Cena:</td>
+                                    <td th:text="*{totalPrice}">Cell 2</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right">Data zamówienia:</td>
+                                    <td th:text="*{dateOfOrder}">Cell 2</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right" style="padding-top: 20px;">Stan:</td>
+                                    <td>
+                                        <select class="form-control" name="orderState" th:value="*{orderState}">
+                                            <option value="0" th:selected="*{orderState == 0}">Nowy</option>
+                                            <option value="1" th:selected="*{orderState == 1}">Realizowane</option>
+                                            <option value="2" th:selected="*{orderState == 2}">Wysłane</option>
+                                            <option value="3" th:selected="*{orderState == 3}">Zrealizowane</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center" colspan="2">
+
+                                            <button class="btn btn-primary" type="submit">Zapisz stan</button>
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <a href="/orders">Powrót</a>
+                <br>
+            </form>
+        </div>
+    </section>
+</main>
+<script th:replace="fragments/back-general-scripts"></script>
+</body>
+
+</html>
