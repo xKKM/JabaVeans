@@ -1,5 +1,5 @@
 # JabaVeans
-This im my portfolio project.
+This is my portfolio project.
 
 I welcome any comments.
 
