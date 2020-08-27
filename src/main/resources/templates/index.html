@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Jaba Veans</title>
+    <link th:replace="fragments/front-styles">
+</head>
+
+<body>
+    <nav th:replace="fragments/front-navigation.html"></nav>
+    <main class="page landing-page">
+        <section class="clean-block clean-hero" style="color: rgba(0,0,0,0.08);background-image: url(&quot;/assets/img/ziarna.jpg&quot;);">
+            <div class="text" style="padding: 10px;background-color: rgba(0,0,0,0.32);">
+                <h2>Ziarna kawy prosto z Indonezji!</h2>
+                <p>Zakosztuj kawy ze słynnych Jawajskich ziaren.</p><a href="/order"><button class="btn btn-outline-light btn-lg" type="button">Zamów</button></a></div>
+        </section>
+        <section class="clean-block clean-info dark">
+            <div class="container">
+                <div class="block-heading">
+                    <h2 class="text-info">Jedyna taka!</h2>
+                    <p>Nie spotkasz w polsce drugiej takiej kawy jak kawa z z jawajskich ziaren!</p>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col-md-6"><img class="img-thumbnail" src="/assets/img/kawa.jpg"></div>
+                    <div class="col-md-6">
+                        <h3>Niespotykane smaki!</h3>
+                        <div class="getting-started-info">
+                            <p>Każda zapażona filiżanka kawy zapewnia niesamowitą podróż po świecie smaków.&nbsp;</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="clean-block features" style="background-color: #ffffff;">
+            <div class="container">
+                <div class="block-heading">
+                    <h2 class="text-info">Najwyższa jakość!</h2>
+                    <p></p>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-5 feature-box"><i class="icon-location-pin icon"></i>
+                        <h4>Prosto z plantacji!</h4>
+                        <p>Sprowadzamy nasze ziarna bezpośrednio od jawajskich rolników.</p>
+                    </div>
+                    <div class="col-md-5 feature-box"><i class="icon-bag icon"></i>
+                        <h4>Świeżo po zbiorach!</h4>
+                        <p>Ziarna są pakowane zaraz po zbiorach zapewniając im jak najwyższą świeżość.</p>
+                    </div>
+                    <div class="col-md-5 feature-box"><i class="icon-heart icon"></i>
+                        <h4>Wieloletnie doświadczenie!</h4>
+                        <p>Zajmujemy się tym już od 1993 roku współpracując z zaufanymi rolnikami.</p>
+                    </div>
+                </div>
+                <div class="text-center"><a href="/order"><button class="btn btn-outline-primary btn-lg" type="button">Zamów Teraz</button></a></div>
+            </div>
+        </section>
+    </main>
+
+    <script th:replace="fragments/front-general-scripts"></script>
+</body>
+
+</html>
