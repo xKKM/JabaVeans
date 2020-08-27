@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Tabela zamówień</title>
+    <link th:replace="fragments/back-styles">
+</head>
+
+<body id="page-top">
+<nav th:replace="fragments/back-navigation"></nav>
+<main class="page">
+    <section class="clean-block dark h-100">
+        <div class="container cextra">
+            <h3 class="text-dark mb-4">Zamówienia</h3>
+            <form th:action="@{/orders}" method="post">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 col-xl-5 text-nowrap">
+                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                    <label>Show&nbsp;
+                                        <input type="hidden" name="lastSize" th:value="${tablePage.lastSize}">
+                                        <select class="form-control form-control-sm custom-select custom-select-sm"
+                                                th:value="${tablePage.size}" name="size"
+                                                th:onchange="this.form.submit()">
+                                            <option value="10" th:selected="${tablePage.size} == 10">10</option>
+                                            <option value="25" th:selected="${tablePage.size} == 25">25</option>
+                                            <option value="50" th:selected="${tablePage.size} == 50">50</option>
+                                        </select>&nbsp;
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-7 text-right d-md-flex d-xl-flex align-items-md-end align-items-xl-end">
+                                <div class="text-md-right dataTables_filter" id="dataTable_filter"></div>
+                                <div class="input-group" style="margin-right: 16px;margin-bottom: 8px;">
+                                    <div class="input-group-prepend"></div>
+                                    <input class="form-control" type="hidden" name="lastSearchStr"
+                                           th:value="${tablePage.lastSearchStr}">
+                                    <input class="form-control" type="text" name="searchStr"
+                                           th:value="${tablePage.searchStr}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">Wyszukaj</button>
+                                    </div>
+                                </div>
+                                <a th:href="@{/orders/add}">
+                                    <button class="btn btn-primary" type="button"
+                                            style="height: 38px;margin-bottom: 8px;">Dodaj
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 col-lg-1 col-xl-1 offset-md-6 offset-lg-8 offset-xl-8 text-right d-md-flex d-xl-flex align-items-md-end align-items-xl-end">
+                                <div class="text-md-right dataTables_filter" id="dataTable_filter-1"></div><label>Sortuj:</label></div>
+                            <div class="col-md-4 col-lg-3 col-xl-3 offset-xl-0">
+                                <select class="form-control form-control-sm custom-select custom-select-sm" name="sort" th:value="${sort}" onchange="this.form.submit()">
+                                    <option value="ASC" th:selected="${sort.equals('ASC')}">DO asc</option>
+                                    <option value="DESC" th:selected="${sort.equals('DESC')}">DO Desc</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
+                            <table class="table dataTable my-0" id="dataTable">
+                                <thead>
+                                <tr>
+                                    <th>Numer zamówienia</th>
+                                    <th>Klient</th>
+                                    <th>e-mail</th>
+                                    <th>Stan</th>
+                                    <th>Data wpłynięcia</th>
+                                    <th>Opcje</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="order :${orders}">
+                                    <div th:object="${order}">
+                                    <td th:text="*{orderID}">5342312345</td>
+                                    <td th:text="*{firstName + ' ' + surname} ">Airi Satou</td>
+                                    <td th:text="*{email} ">@@@@@@@@@</td>
+                                    <div th:switch="*{orderState}">
+                                        <td th:case="0">Nowy</td>
+                                        <td th:case="1">Realizowane</td>
+                                        <td th:case="2">Wyslane</td>
+                                        <td th:case="3">Zrealizowane</td>
+                                    </div>
+                                    <td th:text="*{dateOfOrder}">$162,700</td>
+                                    <td>
+                                        <a th:href="@{/orders/details/{id}(id=*{orderID})}">
+                                            <button class="btn btn-primary" type="button">Więcej</button>
+                                        </a>
+                                    </td>
+                                    </div>
+
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td><strong>Numer zamówienia</strong></td>
+                                    <td><strong>Klient</strong></td>
+                                    <td><strong>e-mail</strong></td>
+                                    <td><strong>Stan</strong></td>
+                                    <td><strong>Data wpłynięcia</strong></td>
+                                    <td><strong>Opcje</strong></td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 align-self-center">
+                            </div>
+                            <div class="col-md-6">
+                                <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                                    <ul class="pagination">
+                                        <li class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">Strona:</span>
+                                            </div>
+                                            <input class="form-control" type="text" pattern="[0-9]*"   name="currentPage" th:value="${tablePage.currentPage}">
+                                            <div class="input-group-append">
+                                                <input type="submit" class="page-link" value="Go!">
+                                            </div>
+                                        </li>
+                                        <li class="page-item">
+                                            <input type="hidden" name="hasPrev" th:value="${tablePage.hasPrev}">
+                                            <input type="submit" class="btn page-link" name="pageAction"
+                                                   th:value="Prev" th:disabled="${!tablePage.hasPrev}"
+                                                   aria-label="Previous">
+                                        </li>
+                                        <li class="page-item">
+                                            <input type="hidden" name="hasNext" th:value="${tablePage.hasNext}">
+                                            <input type="submit" class="btn page-link" name="pageAction"
+                                                   th:value="Next" th:disabled="${!tablePage.hasNext}"
+                                                   aria-label="Next">
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+<script th:replace="fragments/back-general-scripts"></script>
+</body>
+
+</html>
