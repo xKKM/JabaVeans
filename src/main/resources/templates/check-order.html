@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Sprawdź zamówienie</title>
+    <link th:replace="fragments/front-styles">
+</head>
+
+<body style="background-color: rgb(246,246,246);">
+    <nav th:replace="fragments/front-navigation"></nav>
+    <main class="page">
+        <section class="clean-block clean-form dark h-100">
+            <div class="container h-100">
+                <div class="block-heading">
+                    <p>Sprawdź informacje na temat zamówienia poniżej.</p>
+                </div>
+                <form th:action="@{/order/check-order}" method="post">
+                    <div class="form-group">
+                        <label for="orderID">Numer zamówienia</label>
+                        <p class="alert-danger text-danger" th:if="${orderIdError}" >Niepoprawny numer zamówienia.</p>
+                        <input class="form-control" type="text" id="orderID" th:name="orderID" th:value="${orderID}">
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit">Sprawdź</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+
+    <script th:replace="fragments/front-general-scripts"></script>
+</body>
+
+</html>
