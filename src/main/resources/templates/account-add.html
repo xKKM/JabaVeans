@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dodaj konto</title>
+    <link th:replace="fragments/back-styles">
+</head>
+
+<body id="page-top">
+    <nav th:replace="fragments/back-navigation"></nav>
+    <main class="page">
+        <section class="clean-block clean-form dark h-100">
+            <div class="container cextra">
+                <form th:action="@{/accounts/add}" method="post" th:object="${user}">
+                    <p class="" th:text="${msg}" th:classappend="${success}?'alert-success':'alert-danger'"></p>
+                    <input type="hidden" th:field="*{enabled}">
+                    <h3 class="text-center text-dark mb-4">Dodaj konto</h3>
+                    <p class="alert-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+                    <div class="form-group">
+                        <label>Nazwa użytkownika:</label>
+                        <i class="fa fa-question-circle .tooltip-inner" data-toggle="tooltip" title="Może zawierać jedynie litery i cyfry" style="color: rgb(0,128,255);"></i>
+                        <input class="form-control" type="text" th:field="*{username}">
+                    </div>
+                    <p class="alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" ></p>
+                    <div class="form-group">
+                        <label>Hasło:</label>
+                        <i class="fa fa-question-circle .tooltip-inner" data-toggle="tooltip" title="Może zawierać jedynie litery i cyfry oraz zanki specjalne !@#$%^&*_" style="color: rgb(0,128,255);"></i>
+                        <input class="form-control" type="password" th:field="*{password}">
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group"><label>Rola&nbsp;</label><i class="fa fa-question-circle .tooltip-inner" data-toggle="tooltip" data-bs-tooltip="" title="Po najechaniu na nazwę w rozwiniętej liście wyświetli się opis danej roli." style="color: rgb(0,128,255);"></i>
+                                <select
+                                    class="form-control" th:field="*{role}">
+                                    <option value="LVL30" data-toggle="tooltip" title="Całkowity dostęp.">Poziom 1</option>
+                                    <option value="LVL1" selected="" data-toggle="tooltip" title="Dostęp jedynie do zamówień.">Poziom 2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group text-center"><button class="btn btn-primary" type="submit">Dodaj</button>
+                    </div><a href="/accounts">Powrót</a></form>
+            </div>
+        </section>
+    </main>
+    <script th:replace="fragments/back-general-scripts"></script>
+</body>
+
+</html>
