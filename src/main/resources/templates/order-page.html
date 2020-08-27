@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Zamów</title>
+    <link th:replace="fragments/front-styles">
+</head>
+
+<body>
+    <nav th:replace="fragments/front-navigation.html"></nav>
+    <main class="page">
+        <section class="clean-block clean-form dark">
+            <div class="container">
+                <div class="block-heading">
+                    <h2 class="text-info">Formularz zamówienia</h2>
+                </div>
+
+                <form style="padding: 35px;" th:action="@{/order}" method="post">
+                    <div class="d-flex">
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="firstName">Imie:</label>
+                                    <p class="alert-danger text-danger" th:if="${#fields.hasErrors('order.firstName')}" th:errors="${order.firstName}"></p>
+                                    <input class="form-control" type="text" id="firstName" th:name="firstName" required="" th:value="${order.firstName}">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="surname">Nazwisko:</label>
+                                    <p class="alert-danger text-danger" th:if="${#fields.hasErrors('order.surname')}" th:errors="${order.surname}"></p>
+                                    <input class="form-control" type="text" id="surname" required=""  th:field="${order.surname}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="padding: 5px;margin: 0px;">
+                        <label for="email">Email:</label>
+                        <p class="alert-danger text-danger" th:if="${#fields.hasErrors('order.email')}" th:errors="${order.email}"></p>
+                        <input class="form-control item" type="email" id="email" required="" th:field="${order.email}">
+                    </div>
+                    <div class="form-group" style="margin: 0px;padding: 5px;">
+                        <label for="address">Adres Dostawy:</label>
+                        <p class="alert-danger text-danger" th:if="${#fields.hasErrors('order.address')}" th:errors="${order.address}"></p>
+                        <input class="form-control" type="text" id="address" required="" th:field="${order.address}">
+                    </div>
+                    <div class="d-flex flex-column justify-content-between">
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group flex-grow-1">
+                                    <label for="weight">Masa:</label>
+                                    <select class="form-control" id="weight" th:field="${order.weight}" >
+                                        <option value="0" selected="">100 gramów</option>
+                                        <option value="1">250 gramów</option>
+                                        <option value="2">500 gramów</option>
+                                        <option value="3">1000 gramów</option>
+                                    </select></div>
+                            </div>
+                            <div class="col-12 col-sm-3 col-md-2 col-xl-3">
+                                <div class="form-group">
+                                    <label for="quantity">Ilość:</label>
+                                   <input class="form-control" type="number" id="quantity" min="1" max="99" value="1" required="" th:field="${order.quantity}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="submit">Zamów</button>
+                </form>
+
+            </div>
+        </section>
+    </main>
+
+    <script th:replace="fragments/front-general-scripts.html"></script>
+</body>
+
+</html>
