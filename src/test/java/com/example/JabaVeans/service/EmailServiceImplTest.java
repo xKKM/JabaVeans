@@ -24,7 +24,7 @@ class EmailServiceImplTest {
 
     EmailServiceImplTest() {
         emailSender = mock(JavaMailSender.class);
-        emailService = new EmailServiceImpl(emailSender, "email.example.com");
+        emailService = new EmailServiceImpl(emailSender, "email.example.com", "");
 
     }
 
