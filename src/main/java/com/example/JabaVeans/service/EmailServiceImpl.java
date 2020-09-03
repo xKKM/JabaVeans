@@ -12,13 +12,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailServiceImpl implements EmailService {
     private final JavaMailSender emailSender;
+    private final String from;
 
-    String from;
+    private final String demo;
 
     @Autowired
-    public EmailServiceImpl(JavaMailSender emailSender, @Value("${spring.mail.username}") String from) {
+    public EmailServiceImpl(JavaMailSender emailSender, @Value("${spring.mail.username}") String from,
+                            @Value("${demo.testing:no}") String demo) {
         this.emailSender = emailSender;
         this.from = from;
+        this.demo = demo;
     }
 
 
@@ -40,7 +43,9 @@ public class EmailServiceImpl implements EmailService {
                         order.getFirstName(),
                         order.getSurname(),
                         order.getOrderID()));
-        emailSender.send(message);
+        if(!demo.equals("enabled")) {
+            emailSender.send(message);
+        }
     }
 
     @Override
@@ -61,7 +66,8 @@ public class EmailServiceImpl implements EmailService {
                         order.getSurname(),
                         OrderStrings.orderStates[order.getOrderState()],
                         order.getOrderID()));
-
-        emailSender.send(message);
+        if(!demo.equals("enabled")) {
+            emailSender.send(message);
+        }
     }
 }
